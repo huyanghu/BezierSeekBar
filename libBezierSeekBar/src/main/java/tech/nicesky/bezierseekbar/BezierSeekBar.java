@@ -1,6 +1,7 @@
 package tech.nicesky.bezierseekbar;
 
 import android.animation.ValueAnimator;
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Canvas;
@@ -13,7 +14,6 @@ import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -30,6 +30,7 @@ import java.text.DecimalFormat;
  * @email fairytale110@foxmail.com
  * @description:
  */
+@SuppressWarnings("all")
 public class BezierSeekBar extends View {
 
     private Context context;
@@ -117,12 +118,12 @@ public class BezierSeekBar extends View {
         init(context, attrs);
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     public BezierSeekBar(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(context, attrs);
     }
-
 
     private void init(Context context, AttributeSet attrs) {
         this.context = context;
@@ -492,6 +493,9 @@ public class BezierSeekBar extends View {
 
     public void setValueSelected(int valueSelected) {
         this.valueSelected = valueSelected;
+        this.fingerXDefault = width * (float) (this.valueSelected - valueMin) / (float) (this.valueMax - this.valueMin);
+        this.fingerX = this.fingerXDefault;
+        postInvalidate();
     }
 
     public void setColorBall(int colorBall) {
@@ -510,4 +514,5 @@ public class BezierSeekBar extends View {
     public void setUnit(String unit) {
         this.unit = unit;
     }
+
 }
